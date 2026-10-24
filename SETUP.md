@@ -5,14 +5,14 @@ Homework 2 + Homework 3 | Setup instructions | 16 October 2026
 
 **Use this package**
 
-Extract MyHomework_Kemleap.zip. Create one GitHub repository named MyHomework. It contains two full source projects named after your teacher's Homework 2 and Homework 3.
+Extract MyHomework_Sann.zip. Create one GitHub repository named MyHomework. It contains two full source projects named after your teacher's Homework 2 and Homework 3.
 
 | Project | Purpose | Public app |
 | --- | --- | --- |
 | Homework2/ | Automatic deployment from main pushes | http://MANAGER_PUBLIC_IP/ |
 | Homework3/ | Three tagged releases and a real rollback | http://MANAGER_PUBLIC_IP:8082/ |
 
-Student: Kemleap. Demo: StockRoom. An inventory desk with quantity controls and low-stock filtering. PDF optional: keep this guide locally; optional/*.pdf is excluded from Git commits. Read important.txt before submission.
+Student: Sann. Demo: StudySprint. A study session planner with task durations and completion progress. PDF optional: keep this guide locally; optional/*.pdf is excluded from Git commits. Read important.txt before submission.
 
 ## Which files go in each folder?
 
@@ -43,8 +43,8 @@ WHERE: LOCAL - Windows PowerShell
 Start Docker Desktop in Linux container mode. You also need Git, VS Code, GitHub, and an AWS account permitted to create EC2/ECR/IAM resources.
 
 ~~~
-$zip = "$env:USERPROFILE\Downloads\MyHomework_Kemleap.zip"
-$dest = "$env:USERPROFILE\Documents\CI_CD_Assignments_Kemleap"
+$zip = "$env:USERPROFILE\Downloads\MyHomework_Sann.zip"
+$dest = "$env:USERPROFILE\Documents\CI_CD_Assignments_Sann"
 Expand-Archive -Path $zip -DestinationPath $dest -Force
 Set-Location "$dest\MyHomework"
 git --version
@@ -68,7 +68,7 @@ Homework3/aws/jenkins-ecr-policy.json
 | Setting | Homework2/ci/settings.env | Homework3/ci/settings.env |
 | --- | --- | --- |
 | AWS_REGION | ap-southeast-1 | ap-southeast-1 |
-| ECR_REPO | kemleap-homework2 | kemleap-homework3 |
+| ECR_REPO | sann-homework2 | sann-homework3 |
 | STACK_NAME | homework2 | homework3 |
 | APP_PORT | 80 | 8082 |
 
@@ -138,7 +138,7 @@ WHERE: LOCAL - MyHomework folder
 
 ~~~
 git init -b main
-git config user.name "Kemleap"
+git config user.name "Sann"
 git config user.email "YOUR_GITHUB_EMAIL"
 git add README.md FILE_MAP.md SETUP.md .gitignore .gitattributes
 git add important.txt
@@ -181,8 +181,8 @@ ECR -> Private registry -> Repositories -> Create repository. Create each name b
 
 | Assignment | ECR repository | Example image tags |
 | --- | --- | --- |
-| Homework 2 | kemleap-homework2 | build-2-abc123456789 |
-| Homework 3 | kemleap-homework3 | v1.0.0, v1.1.0, v1.1.1 |
+| Homework 2 | sann-homework2 | build-2-abc123456789 |
+| Homework 3 | sann-homework3 | v1.0.0, v1.1.0, v1.1.1 |
 
 Copy both repository URIs. They begin with your actual AWS account ID and end in the corresponding repository name.
 
@@ -192,16 +192,16 @@ IAM -> Policies -> Create policy -> JSON. Paste the correct project's aws/jenkin
 
 | Policy name | JSON file |
 | --- | --- |
-| KemleapHomework2EcrPolicy | Homework2/aws/jenkins-ecr-policy.json |
-| KemleapHomework3EcrPolicy | Homework3/aws/jenkins-ecr-policy.json |
+| SannHomework2EcrPolicy | Homework2/aws/jenkins-ecr-policy.json |
+| SannHomework3EcrPolicy | Homework3/aws/jenkins-ecr-policy.json |
 
 ## Create one manager role
 
-IAM -> Roles -> Create role -> Trusted entity: AWS service -> Use case: EC2. Attach both policies. Role name: KemleapJenkinsEcrRole.
+IAM -> Roles -> Create role -> Trusted entity: AWS service -> Use case: EC2. Attach both policies. Role name: SannJenkinsEcrRole.
 
 **CHECK BEFORE CONTINUING**
 
-Two private immutable ECR repositories exist. KemleapJenkinsEcrRole can authenticate and push/pull/describe images in both repositories. Attach it to the manager in Step 5.
+Two private immutable ECR repositories exist. SannJenkinsEcrRole can authenticate and push/pull/describe images in both repositories. Attach it to the manager in Step 5.
 
 If your instructor supplies a restricted training account, use the assigned EC2 role with equivalent permissions. The application pipeline does not need hard-coded AWS keys. The worker receives ECR authentication through Swarm deployment.
 
@@ -213,7 +213,7 @@ Launch two Ubuntu Server 24.04 LTS, x86_64 instances in the same VPC and subnet,
 
 | Instance | Suggested lab size | Disk / IAM role |
 | --- | --- | --- |
-| swarm-manager | 4 GiB RAM, e.g. t3.medium | 30 GiB gp3 / KemleapJenkinsEcrRole |
+| swarm-manager | 4 GiB RAM, e.g. t3.medium | 30 GiB gp3 / SannJenkinsEcrRole |
 | swarm-worker | 1 GiB+ RAM, e.g. t3.micro | 12 GiB gp3 / no role required |
 
 Record the public and private IP of each instance. AWS resources and public IPv4 can incur charges. Keep both apps available through grading.
@@ -245,7 +245,7 @@ Capture the two Running EC2 instances and security group rules, including public
 
 **CHECK BEFORE CONTINUING**
 
-Both nodes have sg-lab-access and sg-swarm. Only the manager has KemleapJenkinsEcrRole and sg-jenkins-hook.
+Both nodes have sg-lab-access and sg-swarm. Only the manager has SannJenkinsEcrRole and sg-jenkins-hook.
 
 # Step 6 - Install Docker on BOTH nodes
 
@@ -366,7 +366,7 @@ sudo -u jenkins -H /snap/bin/aws sts get-caller-identity
 
 **CHECK BEFORE CONTINUING**
 
-Jenkins is active. The jenkins user can run Docker and AWS STS. STS shows the manager's assumed KemleapJenkinsEcrRole. The instance role supplies credentials automatically.
+Jenkins is active. The jenkins user can run Docker and AWS STS. STS shows the manager's assumed SannJenkinsEcrRole. The instance role supplies credentials automatically.
 
 ## Open the admin UI securely through SSH
 
@@ -462,7 +462,7 @@ curl -fsS http://127.0.0.1/version.txt
 
 **CHECK BEFORE CONTINUING**
 
-homework2_web is 2/2 and its build-N-SHA version matches the image in kemleap-homework2 and the public app at http://MANAGER_PUBLIC_IP/.
+homework2_web is 2/2 and its build-N-SHA version matches the image in sann-homework2 and the public app at http://MANAGER_PUBLIC_IP/.
 
 **SCREENSHOT HW2-07 / HW2-08**
 
@@ -519,7 +519,7 @@ git tag -a v1.0.0 -m "Initial Homework 3 release"
 git push origin v1.0.0
 ~~~
 
-Wait for HW3-release/v1.0.0 to start automatically and succeed. Verify ECR kemleap-homework3:v1.0.0 and the app at http://MANAGER_PUBLIC_IP:8082/.
+Wait for HW3-release/v1.0.0 to start automatically and succeed. Verify ECR sann-homework3:v1.0.0 and the app at http://MANAGER_PUBLIC_IP:8082/.
 
 ## Release 2: v1.1.0 + branch-ignore test
 

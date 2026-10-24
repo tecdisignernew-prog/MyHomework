@@ -9,9 +9,9 @@ Homework2 and Homework3 match the numbers in your teacher's two PDFs.
 | docker-stack.yml | homework2 stack, port 80 | homework3 stack, port 8082 |
 | Jenkinsfile | Main-push pipeline | Tag jobs, ACTION/VERSION and rollback |
 | ci/pipeline.sh | Own build/push/deploy/verify helper | Own helper including rollback |
-| ci/settings.env | kemleap-homework2 / homework2 / 80 | kemleap-homework3 / homework3 / 8082 |
+| ci/settings.env | sann-homework2 / homework2 / 80 | sann-homework3 / homework3 / 8082 |
 | ci/observe.sh | Not required | Rollback availability monitor |
-| aws/jenkins-ecr-policy.json | kemleap-homework2 ECR permissions | kemleap-homework3 ECR permissions |
+| aws/jenkins-ecr-policy.json | sann-homework2 ECR permissions | sann-homework3 ECR permissions |
 | README.md | Homework 2 usage and submission values | Homework 3 usage and values |
 | RELEASING.md | Not required | Tag convention and rollback procedure |
 | DEPLOYMENT_HISTORY.md | Actual branch deployments | Actual releases and rollback |

@@ -3,7 +3,7 @@
 Produce a finished 1-2 page PDF named HW3_Report.pdf in this folder.
 This template contains no completed deployment claims.
 
-Student name: Kemleap
+Student name: Sann
 Student ID: FILL_IN
 Date: FILL_IN
 GitHub repository and this project folder link: FILL_IN
@@ -29,5 +29,5 @@ Describe one problem you actually encountered and how you solved it.
 
 ## Application check
 
-Demo: StockRoom. An inventory desk with quantity controls and low-stock filtering.
+Demo: StudySprint. A study session planner with task durations and completion progress.
 Describe a real input/output or task you tested in this app.

@@ -1,6 +1,6 @@
-# Homework 2 - StockRoom
+# Homework 2 - StudySprint
 
-Student: Kemleap. Add your required school/student ID.
+Student: Sann. Add your required school/student ID.
 
 This is a complete sample source project for Homework 2.
 It has its own website, Dockerfile, Jenkinsfile, Swarm stack, settings,
@@ -23,14 +23,14 @@ From MyHomework:
 Edit ci/settings.env for non-secret settings:
 
 - Region: ap-southeast-1
-- ECR repository: kemleap-homework2
+- ECR repository: sann-homework2
 - Swarm stack: homework2
 - Swarm service: homework2_web
 - Published app port: 80
 - App URL: http://MANAGER_PUBLIC_IP/
 
 Replace YOUR_ACCOUNT_ID in aws/jenkins-ecr-policy.json.
-Attach this policy to the manager's KemleapJenkinsEcrRole.
+Attach this policy to the manager's SannJenkinsEcrRole.
 When both homework projects use one manager, attach both project policies.
 The worker receives registry authentication through --with-registry-auth.
 
@@ -82,6 +82,6 @@ See ../SETUP.md and the accompanying setup PDF for all cloud commands.
 
 ## Demo application
 
-An inventory desk with quantity controls and low-stock filtering.
+A study session planner with task durations and completion progress.
 This is a static browser demo served by Nginx; local demo data stays in this browser.
 The version footer is supplied by the built image through /version.txt.
